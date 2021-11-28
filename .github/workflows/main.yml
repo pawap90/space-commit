@@ -1,0 +1,18 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: octokit/request-action@v2.x
+        id: get_user_data
+        with:
+          route: GET /users/{user}
+          user: pawap90
+      - run: "echo latest release: ${{ steps.get_user_data.outputs.data }}"
