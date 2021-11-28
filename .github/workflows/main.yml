@@ -33,7 +33,7 @@ jobs:
       - name: Build project
         run: | 
           npm install
-          npm run script build
+          npm run build
 
       # Upload Artifacts
       - name: Upload Artifacts
