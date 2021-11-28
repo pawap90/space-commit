@@ -17,4 +17,4 @@ jobs:
           user: pawap90
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo user output: ${{ steps.get_user_data.outputs.data.blog }}"
+      - run: "echo user output: ${{ fromJson(steps.get_user_data.outputs.data).blog }}"
