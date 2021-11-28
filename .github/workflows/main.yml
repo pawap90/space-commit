@@ -35,15 +35,8 @@ jobs:
           npm install
           npm run build
 
-      # Upload Artifacts
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: _build
-
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: build
+          folder: _build
