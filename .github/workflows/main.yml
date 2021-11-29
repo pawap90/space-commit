@@ -49,3 +49,15 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: _build
+          clean: true
+          clean-exclude: archive
+        
+      - name: Send to archive 📁
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: _build
+          clean: true
+          clean-exclude: archive
+          target-folder: archive/${{ fromJson(steps.get_user_data.outputs.data).login }}
+          
