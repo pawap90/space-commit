@@ -1,7 +1,7 @@
 {
-  "name": "phaser3-ts-snowpack-eslint",
+  "name": "gh-pilot",
   "version": "1.0.0",
-  "description": "A modern Phaser 3 template with TypeScript, Snowpack & ESLint",
+  "description": "Be a contributor. Be the hero.",
   "main": "src/main.ts",
   "scripts": {
     "start": "snowpack dev",

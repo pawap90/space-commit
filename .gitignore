@@ -1,3 +1,4 @@
 node_modules
 _build
 _tscbuild
+src/Contributor.ts

@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
 
+import { Contributor } from '../Contributor';
+
 export default class InitialScene extends Phaser.Scene {
-    private achoThePup!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+    private hero!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
     constructor() {
         super('initial');
@@ -10,10 +12,14 @@ export default class InitialScene extends Phaser.Scene {
     create(): void {
 
         this.add.image(400, 570, 'ground');
-        this.achoThePup = this.physics.add.image(0, 0, 'acho');
+        this.hero = this.physics.add.image(0, 0, 'hero');
+
+        console.info('Contributor: ' + Contributor.username)
+        console.info('Commit: ' + Contributor.commit)
+        console.info('Commig message: ' + Contributor.message)
         
-        this.achoThePup.setCollideWorldBounds(true);
-        this.achoThePup.setBounce(1, 1);
-        this.achoThePup.setVelocityX(300);
+        this.hero.setCollideWorldBounds(true);
+        this.hero.setBounce(1, 1);
+        this.hero.setVelocityX(300);
     }
 }
