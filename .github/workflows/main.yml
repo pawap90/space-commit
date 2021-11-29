@@ -11,13 +11,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: octokit/request-action@v2.x
-        id: get_user_data
+        name: Retrieve contribution data
+        id: get_contribution_data
         with:
           route: GET /users/{user}
           user: pawap90
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo user output: ${{ fromJson(steps.get_user_data.outputs.data).avatar_url }}"
+    
+      - name: Store contribution data in env vars
+        run: | 
+          echo "username=${{ fromJson(steps.get_contribution_data.outputs.data).login }}" >> $GITHUB_ENV
+          echo "avatar_url=${{ fromJson(steps.get_contribution_data.outputs.data).avatar_url }}" >> $GITHUB_ENV
+          echo "commit_sha=${{ github.sha }}" >> $GITHUB_ENV
+          echo "commit_message=TODO" >> $GITHUB_ENV
+        
+      - name: Print collected data
+        run: | 
+          echo "data collected 
+                username ${{ env.username }}
+                avatar ${{ env.avatar_url }}
+                commit sha ${{ env.commit_sha }}
+                commit msg ${{ env.commit_message }}"
       
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
