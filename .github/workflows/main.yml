@@ -28,17 +28,22 @@ jobs:
         with:
           node-version: '14'
           cache: 'npm'
-          
+        
+      - name: Generate contributor data
+        run: |
+          echo "export const Contributor = {
+              username: \"${{ fromJson(steps.get_user_data.outputs.data).login }}\",
+              avatar_url: \"${{ fromJson(steps.get_user_data.outputs.data).avatar_url }}\",
+              commit: \"${{ github.sha }}\",
+              message: \"TO-DO get from github api\"   
+          }" > src/Contributor.ts
+      
       # Build
       - name: Build project
         run: | 
           npm install
           npm run build
-          
-      - name: Print commit SHA
-        run: |
-          echo Current commit: ${{ github.sha }}
-
+        
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
