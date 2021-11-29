@@ -17,7 +17,7 @@ jobs:
           user: pawap90
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo user output: ${{ fromJson(steps.get_user_data.outputs.data).blog }}"
+      - run: "echo user output: ${{ fromJson(steps.get_user_data.outputs.data).avatar_url }}"
   
   build:
     runs-on: ubuntu-latest
@@ -34,6 +34,10 @@ jobs:
         run: | 
           npm install
           npm run build
+          
+      - name: Print commit SHA
+        run: |
+          echo Current commit: ${{ github.sha }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
