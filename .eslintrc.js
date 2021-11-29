@@ -10,7 +10,7 @@ module.exports = {
     ],
     rules: {
         'semi': ['error', 'always'],
-        'no-console': 2,
+        'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
         'quotes': ['error', 'single'],
         'curly': 0,
         'brace-style': ['error', 'stroustrup'],
