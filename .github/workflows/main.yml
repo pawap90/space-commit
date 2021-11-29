@@ -31,10 +31,10 @@ jobs:
       - name: Generate contributor data
         run: |
           echo "export const Contributor = {
-              username: \"${{ fromJson(steps.get_user_data.outputs.data).login }}\",
-              avatar_url: \"${{ fromJson(steps.get_user_data.outputs.data).avatar_url }}\",
-              commit: \"${{ github.sha }}\",
-              message: \"TO-DO get from github api\"   
+              username: '${{ fromJson(steps.get_user_data.outputs.data).login }}',
+              avatar_url: '${{ fromJson(steps.get_user_data.outputs.data).avatar_url }}',
+              commit: '${{ github.sha }}',
+              message: 'TO-DO get from github api'
           }" > src/Contributor.ts
       
       # Build
