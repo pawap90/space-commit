@@ -35,12 +35,13 @@ jobs:
               avatar_url: '${{ fromJson(steps.get_user_data.outputs.data).avatar_url }}',
               commit: '${{ github.sha }}',
               message: 'TO-DO get from github api'
-          }" > src/Contributor.ts
+          };" > src/Contributor.ts
       
       # Build
       - name: Build project
         run: | 
           npm install
+          npm run lint:fix
           npm run build
         
       - name: Deploy 🚀
