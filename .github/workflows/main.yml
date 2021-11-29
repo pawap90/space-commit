@@ -28,6 +28,9 @@ jobs:
         with:
           node-version: '14'
           cache: 'npm'
+          
+      - name: Test github api data
+        run: "echo user output: ${{ fromJson(steps.get_user_data.outputs.data).avatar_url }}"
         
       - name: Generate contributor data
         run: |
