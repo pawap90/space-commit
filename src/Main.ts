@@ -5,16 +5,17 @@ import InitialScene from './scenes/InitialScene';
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1900,
+    height: 940,
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 500 }
+            gravity: { y: 500 },
+            debug: false
         }
     },
     scene: [PreloaderScene, InitialScene],
-    backgroundColor: '#21213B'
+    backgroundColor: '#222034'
 };
 
 export default new Phaser.Game(config);
