@@ -1,4 +1,4 @@
-import ControllerKeys from "../../utils/ControllerKeys";
+import ControllerKeys from '../../utils/ControllerKeys';
 
 export default class AstronautCharacter extends Phaser.Physics.Arcade.Image {
 
@@ -12,8 +12,8 @@ export default class AstronautCharacter extends Phaser.Physics.Arcade.Image {
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'astronaut');
         
-        scene.add.existing(this)
-        scene.physics.add.existing(this)
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
 
         this.setOrigin(0, 0);
         this.setCollideWorldBounds(true);
@@ -24,7 +24,7 @@ export default class AstronautCharacter extends Phaser.Physics.Arcade.Image {
         this.setDepth(1);
 
         this.avatar = scene.add.image(100, 100, 'avatar');
-        this.avatar.setScale(0.25, 0.25)
+        this.avatar.setScale(0.25, 0.25);
         
         this.avatarMask = scene.make.image({ x: 0, y: 0, key: 'avatar-mask', add: false });
         this.avatar.mask = new Phaser.Display.Masks.BitmapMask(scene, this.avatarMask);
