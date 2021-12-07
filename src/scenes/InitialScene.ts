@@ -1,8 +1,12 @@
 import Phaser from 'phaser';
 import ControllerKeys from '../utils/ControllerKeys';
+import InfiniteScrollingImageHelper from '../utils/InfiniteScrollingImageHelper';
 
 export default class InitialScene extends Phaser.Scene {
     private characterSprite!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
+
+    private infiniteScrollingFloorHelper!: InfiniteScrollingImageHelper;
+    private infiniteScrollingSkyHelper!: InfiniteScrollingImageHelper;
 
     private controllerKeys!: ControllerKeys;
 
@@ -10,6 +14,8 @@ export default class InitialScene extends Phaser.Scene {
     private characterJumpSpeed = 30;
     private characterIsJumping = false;
 
+    private floorSpeed = 50;
+    
     constructor() {
         super('initial');
     }
@@ -19,20 +25,16 @@ export default class InitialScene extends Phaser.Scene {
         this.controllerKeys = new ControllerKeys(this, 'wasd');
 
         // Setup floor
-        const floorSprite = this.add.image(0, 0, 'floor');
-        floorSprite.setOrigin(0, 0);
-        floorSprite.setPosition(0, this.cameras.main.height - floorSprite.height);
+        this.infiniteScrollingFloorHelper = new InfiniteScrollingImageHelper(this, 0, 0, 'floor', this.floorSpeed);
 
         // Setup floor body
-        const floorBody = this.add.rectangle(0, this.cameras.main.height - floorSprite.height + 20, floorSprite.width - 20, floorSprite.height - 20);
+        const floorBody = this.add.rectangle(0, this.cameras.main.height - this.infiniteScrollingFloorHelper.img1.height + 20, this.infiniteScrollingFloorHelper.img1.width - 20, this.infiniteScrollingFloorHelper.img1.height - 20);
         floorBody.setOrigin(0, 0);
         this.physics.add.existing(floorBody, true);
         (floorBody.body as Phaser.Physics.Arcade.Body).debugBodyColor = 0x018852;
 
         // Setup sky
-        const skySprite = this.add.image(0, 0, 'sky');
-        skySprite.setOrigin(0, 0);
-        skySprite.setPosition(0, 0);
+        this.infiniteScrollingSkyHelper = new InfiniteScrollingImageHelper(this, 0, 0, 'sky', 10);
 
         // Setup character
         this.characterSprite = this.physics.add.image(0, 0, 'character');
@@ -51,6 +53,10 @@ export default class InitialScene extends Phaser.Scene {
 
     update(time: number, delta: number) {
         super.update(time, delta);
+
+        // Background scroll.
+        this.infiniteScrollingFloorHelper.update(time, delta);
+        this.infiniteScrollingSkyHelper.update(time, delta);
 
         // Character controller
         let speed = { x: 0, y: 0 };
