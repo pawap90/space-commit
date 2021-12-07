@@ -1,12 +1,15 @@
 import Phaser from 'phaser';
 import ControllerKeys from '../utils/ControllerKeys';
 import InfiniteScrollingImageHelper from '../utils/InfiniteScrollingImageHelper';
+import EnemyCharacter from './characters/EnemyCharacter';
 
 export default class InitialScene extends Phaser.Scene {
     private characterSprite!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
 
     private infiniteScrollingFloorHelper!: InfiniteScrollingImageHelper;
     private infiniteScrollingSkyHelper!: InfiniteScrollingImageHelper;
+
+    private enemyGroup !: Phaser.GameObjects.Group;
 
     private controllerKeys!: ControllerKeys;
 
@@ -45,6 +48,21 @@ export default class InitialScene extends Phaser.Scene {
         this.characterSprite.setMaxVelocity(500, undefined);
         this.characterSprite.setVelocityX(this.characterSpeed)
         this.physics.add.collider(this.characterSprite, floorBody, this.onCharacterCollidesWithFloor, undefined, this);
+
+        // Setup enemy spawn
+        this.enemyGroup = this.add.group({
+            classType: EnemyCharacter
+        });
+
+        this.time.addEvent({
+            callback: () => {
+                const newEnemy = this.enemyGroup.get(0, 0) as EnemyCharacter;
+                newEnemy.setPosition(this.cameras.main.width, floorBody.y - floorBody.height - (this.characterSprite.height / 2) + (newEnemy.height / 2));
+                newEnemy.setSpeed(this.floorSpeed);
+            },
+            delay: 2000,
+            loop: true
+        });  
     }
 
     onCharacterCollidesWithFloor(go1: Phaser.GameObjects.GameObject, go2: Phaser.GameObjects.GameObject) {
