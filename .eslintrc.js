@@ -15,7 +15,6 @@ module.exports = {
         'curly': 0,
         'brace-style': ['error', 'stroustrup'],
         'indent': ['error', 4],
-        'eol-last': ['error', 'never'],
         '@typescript-eslint/no-unused-vars': 2
     }
 };
