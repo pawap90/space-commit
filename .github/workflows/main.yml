@@ -1,4 +1,4 @@
-name: CI
+name: CICD
 on:
   push:
     branches: [ main ]
@@ -55,7 +55,6 @@ jobs:
       - name: Build project 🔧
         run: | 
           npm install
-          npm run lint:fix
           npm run build
         
       # Deploy latest contribution to GitHub pages
