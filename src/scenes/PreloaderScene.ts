@@ -12,6 +12,8 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('sky', 'assets/sky.png');
         this.load.image('character', 'assets/character.png');
         this.load.image('enemy', 'assets/enemy.png');
+        
+        this.load.image('contributor', Contributor.avatar_url);
     }
 
     create(): void {

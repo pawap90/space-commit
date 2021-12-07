@@ -1,6 +1,6 @@
 export default class EnemyCharacter extends Phaser.GameObjects.Image {
 
-    private speed: number = 10;
+    private speed = 10;
 
     hitbox !: Phaser.GameObjects.Rectangle;
 
@@ -12,28 +12,29 @@ export default class EnemyCharacter extends Phaser.GameObjects.Image {
         this.hitbox = this.scene.add.rectangle(0, 0, 70, 70);
 
         this.scene.physics.add.existing(this.hitbox);
-        (this.hitbox.body as Phaser.Physics.Arcade.Body).allowGravity = false
+        (this.hitbox.body as Phaser.Physics.Arcade.Body).allowGravity = false;
         
     }
     
-    preUpdate(time: number, delta: number) {
-        this.hitbox.copyPosition(new Phaser.Math.Vector2(this.x, this.y))
+    update(time: number, delta: number): void {
+        super.update(time, delta);
+
+        this.hitbox.copyPosition(new Phaser.Math.Vector2(this.x, this.y));
         this.hitbox.x += 65;
         this.hitbox.y += 75;
 
         this.setX(this.x - this.speed * delta);
         if (this.x <= this.width * -1) {
-
             this.destroy();
         }
     }
 
-    destroy() {
+    destroy(): void {
         this.hitbox.destroy();
         super.destroy();
     }
 
-    setSpeed(speed: number) {
+    setSpeed(speed: number): void {
         this.speed = speed / 100;
     }
 }

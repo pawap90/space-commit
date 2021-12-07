@@ -12,11 +12,11 @@ export default class ScrollingImage extends Phaser.GameObjects.Image {
         this.initialXPosition = 0;
     }
 
-    setInitialXPosition(x?: number) {
+    setInitialXPosition(x?: number): void {
         this.initialXPosition = x ?? this.x;
     }
 
-    update(time: number, delta: number) {
+    update(time: number, delta: number): void {
         super.update(time, delta);
 
         this.setX(this.x - this.speed * delta);

@@ -46,12 +46,13 @@ export default class InitialScene extends Phaser.Scene {
         this.characterSprite.setPosition(0, (this.cameras.main.height - this.characterSprite.height) / 2);
         this.characterSprite.setBounce(0, 0.5);
         this.characterSprite.setMaxVelocity(500, undefined);
-        this.characterSprite.setVelocityX(this.characterSpeed)
+        this.characterSprite.setVelocityX(this.characterSpeed);
         this.physics.add.collider(this.characterSprite, floorBody, this.onCharacterCollidesWithFloor, undefined, this);
 
         // Setup enemy spawn
         this.enemyGroup = this.add.group({
-            classType: EnemyCharacter
+            classType: EnemyCharacter,
+            runChildUpdate: true
         });
 
         this.time.addEvent({
@@ -65,11 +66,11 @@ export default class InitialScene extends Phaser.Scene {
         });  
     }
 
-    onCharacterCollidesWithFloor(go1: Phaser.GameObjects.GameObject, go2: Phaser.GameObjects.GameObject) {
+    onCharacterCollidesWithFloor(): void {
         this.characterIsJumping = false;
     }
 
-    update(time: number, delta: number) {
+    update(time: number, delta: number): void {
         super.update(time, delta);
 
         // Background scroll.
@@ -77,7 +78,7 @@ export default class InitialScene extends Phaser.Scene {
         this.infiniteScrollingSkyHelper.update(time, delta);
 
         // Character controller
-        let speed = { x: 0, y: 0 };
+        const speed = { x: 0, y: 0 };
 
         if (this.controllerKeys.left.isDown)
             speed.x = -1 * this.characterSpeed * delta;
