@@ -20,6 +20,8 @@ export default class GameScene extends Phaser.Scene {
     private floorSpeed = 50;
     private points!: number;
 
+    private enemyPositions?: { x: number[], y: number[] }
+
     constructor() {
         super('game');
 
@@ -58,13 +60,16 @@ export default class GameScene extends Phaser.Scene {
         // Create enemy spawner
         this.time.addEvent({
             callback: () => {
+
                 const newEnemy = this.enemyGroup.get(0, 0) as EnemyCharacter;
-                newEnemy.setPosition(this.cameras.main.width, floorBody.y - floorBody.height - (this.characterSprite.height / 2) + (newEnemy.height / 2));
+                const offset = this.getRandomEnemyPositionOffset(newEnemy);
+
+                newEnemy.setPosition(this.cameras.main.width + offset.x, floorBody.y - floorBody.height - offset.y );
                 newEnemy.setSpeed(this.floorSpeed);
 
                 this.physics.add.overlap(this.characterSprite, newEnemy.hitbox, this.onCharacterEnemyOverlap, undefined, this);
             },
-            delay: 2500,
+            delay: 2000,
             loop: true
         });
     }
@@ -85,5 +90,25 @@ export default class GameScene extends Phaser.Scene {
     private onCharacterEnemyOverlap() {
         this.sceneEventManager.events.emit('game-over');
         this.scene.pause();
+    }
+
+    private getRandomEnemyPositionOffset(enemy: EnemyCharacter) {
+        if (!this.enemyPositions) {
+
+            const x = [0, enemy.width * 2, enemy.width * 4];
+            const y = [
+                10, 
+                this.characterSprite.height / 2 - enemy.height / 2, 
+                this.characterSprite.height,
+                this.characterSprite.height + enemy.height
+            ];
+
+            this.enemyPositions = { x, y };
+        }
+
+        return {
+            x: this.enemyPositions.x[Phaser.Math.Between(0, this.enemyPositions.x.length - 1)],
+            y: this.enemyPositions.y[Phaser.Math.Between(0, this.enemyPositions.y.length - 1)]
+        };
     }
 }
