@@ -1,5 +1,5 @@
 {
-  "name": "gh-pilot",
+  "name": "space-commit",
   "version": "1.0.0",
   "description": "Be a contributor. Be the hero.",
   "main": "src/main.ts",
@@ -13,8 +13,11 @@
   },
   "author": "paulasantamaria",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "webfontloader": "^1.6.28"
+  },
   "devDependencies": {
+    "@types/webfontloader": "^1.6.33",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
     "eslint": "^7.25.0",
