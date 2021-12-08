@@ -19,4 +19,4 @@ The latest contribution from each user is stored in the `archive` folder, so you
 
 ## I want to contribute
 
-If you wish to get involved with our space exploration program, please read our [contributing docs](todo).
+If you wish to get involved with our space exploration program, please read our [contributing docs](https://github.com/pawap90/space-commit/blob/main/CONTRIBUTING.md).
