@@ -1,7 +1,5 @@
 import Phaser from 'phaser';
 
-import { Contributor } from '../Contributor';
-
 export default class Preloader extends Phaser.Scene {
     constructor() {
         super('preloader');
@@ -14,7 +12,6 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('enemy', 'assets/enemy.png');
         
         this.load.image('avatar-mask', 'assets/avatar-mask.png');
-        this.load.image('avatar', Contributor.avatar_url);
     }
 
     create(): void {
