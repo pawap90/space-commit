@@ -2,7 +2,8 @@ import Phaser from 'phaser';
 
 import MainMenuScene from './scenes/MainMenuScene';
 import PreloaderScene from './scenes/PreloaderScene';
-import InitialScene from './scenes/InitialScene';
+import GameScene from './scenes/GameScene';
+import GameUIScene from './scenes/GameUIScene';
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -15,7 +16,7 @@ const config: Phaser.Types.Core.GameConfig = {
             debug: false
         }
     },
-    scene: [MainMenuScene, PreloaderScene, InitialScene],
+    scene: [PreloaderScene, MainMenuScene, GameScene, GameUIScene],
     backgroundColor: '#222034'
 };
 
