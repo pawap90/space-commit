@@ -29,11 +29,6 @@ export default class EnemyCharacter extends Phaser.GameObjects.Image {
         }
     }
 
-    destroy(): void {
-        this.hitbox.destroy();
-        super.destroy();
-    }
-
     setSpeed(speed: number): void {
         this.speed = speed / 100;
     }
