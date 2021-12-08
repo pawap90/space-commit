@@ -7,7 +7,7 @@ import EnemyCharacter from '../characters/EnemyCharacter';
 
 export default class GameScene extends Phaser.Scene {
     private sceneEventManager: SceneEventManager;
-    
+
     private characterSprite!: AstronautCharacter;
 
     private infiniteScrollingFloorHelper!: InfiniteScrollingImageHelper;
@@ -18,6 +18,7 @@ export default class GameScene extends Phaser.Scene {
     private controllerKeys!: ControllerKeys;
 
     private floorSpeed = 50;
+    private points!: number;
 
     constructor() {
         super('game');
@@ -26,8 +27,9 @@ export default class GameScene extends Phaser.Scene {
     }
 
     create(): void {
-
         this.scene.run('game-ui');
+
+        this.points = 0;
 
         this.controllerKeys = new ControllerKeys(this, 'wasd');
 
@@ -46,29 +48,32 @@ export default class GameScene extends Phaser.Scene {
         // Create character
         this.characterSprite = new AstronautCharacter(this, 200, 200);
         this.physics.add.collider(this.characterSprite, floorBody, this.characterSprite.onCharacterCollidesWithFloor, undefined, this.characterSprite);
-        
+
         // Create enemy group
         this.enemyGroup = this.add.group({
             classType: EnemyCharacter,
             runChildUpdate: true
         });
-        
+
         // Create enemy spawner
         this.time.addEvent({
             callback: () => {
                 const newEnemy = this.enemyGroup.get(0, 0) as EnemyCharacter;
                 newEnemy.setPosition(this.cameras.main.width, floorBody.y - floorBody.height - (this.characterSprite.height / 2) + (newEnemy.height / 2));
                 newEnemy.setSpeed(this.floorSpeed);
-                
+
                 this.physics.add.overlap(this.characterSprite, newEnemy.hitbox, this.onCharacterEnemyOverlap, undefined, this);
             },
             delay: 2500,
             loop: true
-        });       
+        });
     }
 
     update(time: number, delta: number): void {
         super.update(time, delta);
+
+        this.points++;
+        this.sceneEventManager.events.emit('points-updated', this.points);
 
         // Background scroll.
         this.infiniteScrollingFloorHelper.update(time, delta);
