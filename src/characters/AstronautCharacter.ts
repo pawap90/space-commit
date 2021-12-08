@@ -1,4 +1,4 @@
-import ControllerKeys from '../../utils/ControllerKeys';
+import ControllerKeys from '../utils/ControllerKeys';
 
 export default class AstronautCharacter extends Phaser.Physics.Arcade.Image {
 
@@ -57,11 +57,6 @@ export default class AstronautCharacter extends Phaser.Physics.Arcade.Image {
         }
 
         this.setAccelerationX(speed.x);
-    }
-
-    destroy(): void {
-        this.avatar.destroy();
-        super.destroy();
     }
 
     onCharacterCollidesWithFloor(): void {

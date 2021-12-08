@@ -9,12 +9,6 @@ export default class InitialScene extends Phaser.Scene {
         super('main-menu');
     }
 
-    preload(): void {
-        this.load.image('avatar', Contributor.avatar_url);
-        this.load.image('menu-avatar-mask', 'assets/menu-avatar-mask.png');
-        this.load.image('logo', 'assets/logo.png');
-    }
-
     create(): void {
         /* eslint-disable  @typescript-eslint/no-this-alias */
         const scene = this;
@@ -38,7 +32,7 @@ export default class InitialScene extends Phaser.Scene {
 
     private anyKey(event: { keyCode: number }): void {
         if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.ENTER) {
-            this.scene.start('preloader');
+            this.scene.start('game');
         }
     }
 

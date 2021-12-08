@@ -1,10 +1,13 @@
 import Phaser from 'phaser';
 import ControllerKeys from '../utils/ControllerKeys';
 import InfiniteScrollingImageHelper from '../utils/InfiniteScrollingImageHelper';
-import AstronautCharacter from './characters/AstronautCharacter';
-import EnemyCharacter from './characters/EnemyCharacter';
+import SceneEventManager from '../utils/SceneEventManager';
+import AstronautCharacter from '../characters/AstronautCharacter';
+import EnemyCharacter from '../characters/EnemyCharacter';
 
-export default class InitialScene extends Phaser.Scene {
+export default class GameScene extends Phaser.Scene {
+    private sceneEventManager: SceneEventManager;
+    
     private characterSprite!: AstronautCharacter;
 
     private infiniteScrollingFloorHelper!: InfiniteScrollingImageHelper;
@@ -17,10 +20,14 @@ export default class InitialScene extends Phaser.Scene {
     private floorSpeed = 50;
 
     constructor() {
-        super('initial');
+        super('game');
+
+        this.sceneEventManager = SceneEventManager.getInstance();
     }
 
     create(): void {
+
+        this.scene.run('game-ui');
 
         this.controllerKeys = new ControllerKeys(this, 'wasd');
 
@@ -39,23 +46,25 @@ export default class InitialScene extends Phaser.Scene {
         // Create character
         this.characterSprite = new AstronautCharacter(this, 200, 200);
         this.physics.add.collider(this.characterSprite, floorBody, this.characterSprite.onCharacterCollidesWithFloor, undefined, this.characterSprite);
-
+        
         // Create enemy group
         this.enemyGroup = this.add.group({
             classType: EnemyCharacter,
             runChildUpdate: true
         });
-
+        
         // Create enemy spawner
         this.time.addEvent({
             callback: () => {
                 const newEnemy = this.enemyGroup.get(0, 0) as EnemyCharacter;
                 newEnemy.setPosition(this.cameras.main.width, floorBody.y - floorBody.height - (this.characterSprite.height / 2) + (newEnemy.height / 2));
                 newEnemy.setSpeed(this.floorSpeed);
+                
+                this.physics.add.overlap(this.characterSprite, newEnemy.hitbox, this.onCharacterEnemyOverlap, undefined, this);
             },
-            delay: 2000,
+            delay: 2500,
             loop: true
-        });
+        });       
     }
 
     update(time: number, delta: number): void {
@@ -66,5 +75,10 @@ export default class InitialScene extends Phaser.Scene {
         this.infiniteScrollingSkyHelper.update(time, delta);
 
         this.characterSprite.update(time, delta, this.controllerKeys);
+    }
+
+    private onCharacterEnemyOverlap() {
+        this.sceneEventManager.events.emit('game-over');
+        this.scene.pause();
     }
 }
