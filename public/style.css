@@ -45,3 +45,27 @@ body h1 {
   color: white;
   border-radius: 10px;
 }
+
+.controls {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.controls > .line {
+  display: flex;
+  align-items: center;
+  font-family: "Alien League", serif;
+  color: white;
+  margin-bottom: 0;
+  margin-right: 30px;
+}
+
+.controls > .line > .control {
+  border: white thin solid;
+  border-radius: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-left: 10px;
+}
