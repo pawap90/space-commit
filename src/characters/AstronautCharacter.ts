@@ -4,14 +4,15 @@ export default class AstronautCharacter extends Phaser.Physics.Arcade.Image {
 
     private avatar: Phaser.GameObjects.Image;
     private avatarMask: Phaser.GameObjects.Image;
-    
+
     private speed = 50;
     private jumpSpeed = 30;
     private isJumping = false;
+    private bodyOffset = {x: -10, y: 30};
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'astronaut');
-        
+
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
@@ -23,12 +24,14 @@ export default class AstronautCharacter extends Phaser.Physics.Arcade.Image {
         this.setVelocityX(this.speed);
         this.setDepth(1);
 
+        this.setBodySize(this.width + this.bodyOffset.x, this.height - this.bodyOffset.y);
+        this.setOffset(this.bodyOffset.x, this.bodyOffset.y);
+
         this.avatar = scene.add.image(100, 100, 'avatar');
         this.avatar.setScale(0.25, 0.25);
-        
+
         this.avatarMask = scene.make.image({ x: 0, y: 0, key: 'avatar-mask', add: false });
         this.avatar.mask = new Phaser.Display.Masks.BitmapMask(scene, this.avatarMask);
-
     }
 
     update(time: number, delta: number, controllerKeys: ControllerKeys): void {
