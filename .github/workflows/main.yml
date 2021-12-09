@@ -10,8 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    
-            # Retrieve contribution data from GitHub API
+
+      # Retrieve contribution data from GitHub API
       - uses: octokit/request-action@v2.x
         name: Retrieve contribution data
         id: get_contribution_data
@@ -22,44 +22,44 @@ jobs:
           commit_sha: ${{ github.sha }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+
       # Generate env variables to easily access the contribution data
       - name: Store contribution data in env vars
         run: | 
           echo "username=${{ fromJson(steps.get_contribution_data.outputs.data)[0].user.login }}" >> $GITHUB_ENV
           echo "avatar_url=${{ fromJson(steps.get_contribution_data.outputs.data)[0].user.avatar_url }}" >> $GITHUB_ENV
           echo "commit_sha=${{ github.sha }}" >> $GITHUB_ENV
-          echo "commit_message=${{ fromJson(steps.get_contribution_data.outputs.data)[0].title }}" >> $GITHUB_ENV
-        
-        
+          echo "message=${{ fromJson(steps.get_contribution_data.outputs.data)[0].title }}" >> $GITHUB_ENV
+
+
       - name: Print collected data 
         run: | 
           echo "data collected 
                 username ${{ env.username }}
                 avatar ${{ env.avatar_url }}
                 commit sha ${{ env.commit_sha }}
-                commit msg ${{ env.commit_message }}"
-      
+                message ${{ env.message }}"
+
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
           cache: 'npm'
-  
+
       - name: Generate contributor file 
         run: |
           echo "export const Contributor = {
               username: '${{ env.username }}',
               avatar_url: '${{ env.avatar_url }}',
               commit: '${{ env.commit_sha }}',
-              message: '${{ env.commit_message }}'
+              message: '${{ env.message }}'
           };" > src/Contributor.ts
-      
+
       - name: Build project 🔧
         run: | 
           npm install
           npm run build
-        
+
       # Deploy latest contribution to GitHub pages
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
@@ -68,7 +68,7 @@ jobs:
           folder: _build
           clean: true
           clean-exclude: archive
-        
+
       # Store build permanently in archive folder so everyone can check previous contributions by username
       - name: Send to archive 📁
         uses: JamesIves/github-pages-deploy-action@4.1.5
@@ -78,4 +78,3 @@ jobs:
           clean: true
           clean-exclude: archive
           target-folder: archive/${{ env.username }}
-          
