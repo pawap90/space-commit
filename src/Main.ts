@@ -5,8 +5,8 @@ import PreloaderScene from './scenes/PreloaderScene';
 import GameScene from './scenes/GameScene';
 import GameUIScene from './scenes/GameUIScene';
 
-const height = window.outerHeight * 0.6
-const zoom = ((height * 100) / 1080) / 100
+const height = window.outerHeight * 0.6;
+const zoom = ((height * 100) / 1080) / 100;
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
