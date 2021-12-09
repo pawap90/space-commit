@@ -5,10 +5,13 @@ import PreloaderScene from './scenes/PreloaderScene';
 import GameScene from './scenes/GameScene';
 import GameUIScene from './scenes/GameUIScene';
 
+const height = window.outerHeight * 0.6
+const zoom = ((height * 100) / 1080) / 100
+
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
-    width: 1900,
-    height: 940,
+    width: 1920,
+    height: 1080,
     physics: {
         default: 'arcade',
         arcade: {
@@ -17,7 +20,8 @@ const config: Phaser.Types.Core.GameConfig = {
         }
     },
     scene: [PreloaderScene, MainMenuScene, GameScene, GameUIScene],
-    backgroundColor: '#222034'
+    backgroundColor: '#222034',
+    zoom
 };
 
 export default new Phaser.Game(config);
