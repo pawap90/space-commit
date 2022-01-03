@@ -24,16 +24,16 @@ body > canvas {
   margin-right: 10px;
 }
 
+@font-face {
+  font-family: "Alien League";
+  src: url("./AlienLeagueIiGradientBold.otf");
+}
+
 .github-url a {
   font-family: "Alien League";
   text-decoration: none;
   color: white;
   font-size: 25px;
-}
-
-@font-face {
-  font-family: "Alien League";
-  src: local("./AlienLeagueIiGradientBold.otf");
 }
 
 body h1 {
