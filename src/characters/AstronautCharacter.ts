@@ -59,6 +59,11 @@ export default class AstronautCharacter extends Phaser.Physics.Arcade.Image {
             this.setVelocityY(speed.y);
         }
 
+        if(this.isJumping && controllerKeys.down.isDown){
+            speed.y = 1 * this.speed * delta;
+            this.setVelocityY(speed.y);
+        }
+
         this.setAccelerationX(speed.x);
     }
 
