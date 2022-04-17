@@ -4,6 +4,7 @@ import MainMenuScene from './scenes/MainMenuScene';
 import PreloaderScene from './scenes/PreloaderScene';
 import GameScene from './scenes/GameScene';
 import GameUIScene from './scenes/GameUIScene';
+import PauseMenuScene from './scenes/PauseMenuScene';
 
 const height = window.outerHeight * 0.6;
 const zoom = ((height * 100) / 1080) / 100;
@@ -19,7 +20,7 @@ const config: Phaser.Types.Core.GameConfig = {
             debug: false
         }
     },
-    scene: [PreloaderScene, MainMenuScene, GameScene, GameUIScene],
+    scene: [PreloaderScene, MainMenuScene, GameScene, GameUIScene, PauseMenuScene],
     backgroundColor: '#222034',
     zoom
 };
