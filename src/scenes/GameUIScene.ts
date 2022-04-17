@@ -44,6 +44,15 @@ export default class GameUIScene extends Phaser.Scene {
             this.scene.stop('game');
             this.scene.start('main-menu');
         }
+        if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.CAPS_LOCK) {
+            this.scene.pause('game');
+            this.scene.launch('pause-menu');
+        }
+        if(event.keyCode === Phaser.Input.Keyboard.KeyCodes.BACKSPACE) {
+            this.scene.stop('pause-menu');
+            this.scene.run('game');
+        }
+
     }
 
     private addGameOverMenuComponents(fontFamily: string, titleSize: string, smallLabelSize: string): void {
